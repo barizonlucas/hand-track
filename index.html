@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Hand Tracking AI – suíte interativa com visão computacional em tempo real." />
+  <title>Hand Track Core</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Webcam feed (hidden, only used as texture source) -->
+  <video id="webcam" autoplay muted playsinline aria-hidden="true"></video>
+
+  <!-- Main rendering canvas -->
+  <canvas id="output-canvas" aria-label="Hand tracking visualization"></canvas>
+
+  <!-- Scanline aesthetic overlay -->
+  <div id="scanlines" aria-hidden="true"></div>
+
+  <!-- ── HUD header ─────────────────────────────────────────────── -->
+  <header id="hud-header" aria-label="Status do sistema">
+    <div id="hud-logo">
+      <svg class="logo-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M9 11l3 3L22 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="logo-text">HAND<span class="logo-accent">TRACK</span></span>
+    </div>
+    <div id="hud-badge">
+      <span class="badge-dot" id="badge-dot"></span>
+      <span id="badge-label">Inicializando</span>
+    </div>
+  </header>
+
+  <!-- ── HUD footer (metrics + tabs) ───────────────────────────────────── -->
+  <footer id="hud-footer" aria-label="Métricas em tempo real">
+    <nav id="tabs-nav" aria-label="Navegação de Módulos">
+      <button class="tab-btn active" data-tab="symmetry">Simetria</button>
+      <button class="tab-btn" data-tab="synth">Sintetizador</button>
+      <button class="tab-btn" data-tab="reflex">Reflexo</button>
+      <button class="tab-btn" data-tab="lockpick">Lockpick</button>
+    </nav>
+    <div class="metrics-group">
+      <div class="metric-card" id="metric-hands">
+        <span class="metric-label">MÃOS</span>
+        <span class="metric-value" id="hand-count">0</span>
+      </div>
+      <div class="metric-card" id="metric-score" style="display:none;">
+        <span class="metric-label">SCORE</span>
+        <span class="metric-value" id="score-value">0</span>
+      </div>
+      <div class="metric-card" id="metric-fps">
+        <span class="metric-label">FPS</span>
+        <span class="metric-value" id="fps-value">—</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-label">ENGINE</span>
+        <span class="metric-value">MediaPipe</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── Init loading overlay ───────────────────────────────────── -->
+  <div id="loading-overlay" role="status" aria-live="polite">
+    <div class="loader-box">
+      <div class="loader-rings">
+        <div class="ring ring-1"></div>
+        <div class="ring ring-2"></div>
+        <div class="ring ring-3"></div>
+      </div>
+      <p class="loader-title">HAND TRACK CORE</p>
+      <p class="loader-sub" id="loader-sub">Carregando MediaPipe…</p>
+    </div>
+  </div>
+
+  <!-- ── Creator Signature ──────────────────────────────────────── -->
+  <a href="https://bariza.dev" target="_blank" class="creator-tag">SYS.ARCHITECT // BARIZA.DEV</a>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
